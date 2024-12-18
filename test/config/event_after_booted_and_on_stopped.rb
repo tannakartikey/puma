@@ -1,5 +1,5 @@
-on_booted do
-  puts "on_booted called"
+after_booted do
+  puts "after_booted called"
 end
 
 on_stopped do

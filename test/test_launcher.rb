@@ -80,7 +80,7 @@ class TestLauncher < Minitest::Test
       c.app -> {[200, {}, ['']]}
     end
     launcher = create_launcher(conf)
-    launcher.events.on_booted {
+    launcher.events.after_booted {
       sleep 1.1 unless Puma.mri?
       launcher.stop
     }
@@ -103,7 +103,7 @@ class TestLauncher < Minitest::Test
       c.workers 1
     end
     launcher = create_launcher(conf)
-    launcher.events.on_booted { queue_booted << nil }
+    launcher.events.after_booted { queue_booted << nil }
 
     th_stats = Thread.new do
       queue_booted.pop
@@ -153,7 +153,7 @@ class TestLauncher < Minitest::Test
     is_stopped = nil
 
     launcher = create_launcher(conf)
-    launcher.events.on_booted {
+    launcher.events.after_booted {
       sleep 1.1 unless Puma.mri?
       launcher.stop
     }
