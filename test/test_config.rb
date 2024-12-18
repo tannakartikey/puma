@@ -468,8 +468,9 @@ class TestConfigFile < Minitest::Test
     assert_equal conf.options[:raise_exception_on_sigterm], true
   end
 
-  def test_run_hooks_on_restart_hook
-    assert_run_hooks :on_restart
+  def test_run_hooks_before_restart_hook
+    assert_run_hooks :before_restart
+    assert_run_hooks :before_restart, configured_with: :on_restart
   end
 
   def test_run_hooks_before_worker_fork
@@ -524,15 +525,15 @@ class TestConfigFile < Minitest::Test
 
   def test_run_hooks_and_exception
     conf = Puma::Configuration.new do |c|
-      c.on_restart do |a|
+      c.before_restart do |a|
         raise RuntimeError, 'Error from hook'
       end
     end
     conf.load
     log_writer = Puma::LogWriter.strings
 
-    conf.run_hooks(:on_restart, 'ARG', log_writer)
-    expected = /WARNING hook on_restart failed with exception \(RuntimeError\) Error from hook/
+    conf.run_hooks(:before_restart, 'ARG', log_writer)
+    expected = /WARNING hook before_restart failed with exception \(RuntimeError\) Error from hook/
     assert_match expected, log_writer.stdout.string
   end
 

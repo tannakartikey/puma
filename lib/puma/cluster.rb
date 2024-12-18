@@ -45,7 +45,7 @@ module Puma
     end
 
     def start_phased_restart
-      @events.fire_on_restart!
+      @events.fire_before_restart!
       @phase += 1
       log "- Starting phased worker restart, phase: #{@phase}"
 
