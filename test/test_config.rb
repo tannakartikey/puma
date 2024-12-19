@@ -518,6 +518,7 @@ class TestConfigFile < Minitest::Test
   end
 
   def test_run_hooks_before_thread_exit
+    assert_run_hooks :before_thread_exit
     assert_run_hooks :before_thread_exit, configured_with: :on_thread_exit
   end
 
