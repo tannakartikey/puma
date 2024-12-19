@@ -474,9 +474,10 @@ class TestConfigFile < Minitest::Test
   end
 
   def test_run_hooks_before_worker_fork
+    assert_run_hooks :before_worker_fork
     assert_run_hooks :before_worker_fork, configured_with: :on_worker_fork
 
-    assert_warning_for_hooks_defined_in_single_mode :on_worker_fork
+    assert_warning_for_hooks_defined_in_single_mode :before_worker_fork
   end
 
   def test_run_hooks_after_worker_fork
