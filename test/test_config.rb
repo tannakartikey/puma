@@ -506,9 +506,10 @@ class TestConfigFile < Minitest::Test
   end
 
   def test_run_hooks_before_refork
+    assert_run_hooks :before_refork
     assert_run_hooks :before_refork, configured_with: :on_refork
 
-    assert_warning_for_hooks_defined_in_single_mode :on_refork
+    assert_warning_for_hooks_defined_in_single_mode :before_refork
   end
 
   def test_run_hooks_before_thread_start
