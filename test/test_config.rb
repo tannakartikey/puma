@@ -513,6 +513,7 @@ class TestConfigFile < Minitest::Test
   end
 
   def test_run_hooks_before_thread_start
+    assert_run_hooks :before_thread_start
     assert_run_hooks :before_thread_start, configured_with: :on_thread_start
   end
 
